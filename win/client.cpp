@@ -54,7 +54,7 @@ int main(int argc, char* argv[])
 		closesocket(sclient);
 		return 0;
 	}
-	const char * sendData = "你好，TCP服务端，我是客户端!\n";
+	const char * sendData = "Hello, TCP server, I'm client!\n";
 	send(sclient, sendData, strlen(sendData), 0);
 
 	char recData[255];
