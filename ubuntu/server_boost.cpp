@@ -31,6 +31,7 @@ public:
 
     void accept()
     {
+        printf("accept()\n");
         sock_ptr sock(new socket_type(m_io));
         m_acceptor.async_accept(*sock, boost::bind(&this_type::accept_handler, this, boost::asio::placeholders::error, sock));
     }
@@ -53,11 +54,13 @@ public:
 
         cout<<"-->> Client: ";
         cout<<sock->remote_endpoint().address() << " " << num_count << " " << endl;
-        sock->async_write_some(buffer(b), boost::bind(&this_type::write_handler, this, boost::asio::placeholders::error));
+        sock->async_write_some(buffer(b), boost::bind(&this_type::accept_handler, this, boost::asio::placeholders::error, sock));
 //        sock->async_write_some(buffer(to_string(num_count)), boost::bind(&this_type::write_handler, this, boost::asio::placeholders::error));
 //        sock->async_write_some(buffer("hello asio "), boost::bind(&this_type::write_handler, this, boost::asio::placeholders::error));
         // 发送完毕后继续监听，否则io_service将认为没有事件处理而结束运行
-        accept();
+//        accept();
+        sleep(5);
+
     }
 
     void write_handler(const boost::system::error_code&ec)

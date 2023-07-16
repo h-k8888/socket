@@ -23,7 +23,7 @@
 	class DeviceServer
 	{
 	public:
-		DeviceServer(boost::asio::io_context& io_context,
+		DeviceServer(boost::asio::io_service& io_context,
 			const boost::asio::ip::tcp::endpoint& endpoint, DeviceController* controller);
 		void setController(DeviceController* controller);
 		void stop();

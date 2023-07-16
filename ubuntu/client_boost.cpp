@@ -62,11 +62,15 @@ private:
 
     void handle_read(const boost::system::error_code& err, size_t s)
     {
+        printf("handle_read.\n");
         if (!err)
         {
             std::cout  << " client recv:"  << _buffer << "\n";
+            memset(_buffer, '\0', 1024);
+            boost::asio::async_read(socket_, boost::asio::buffer(_buffer, 1024),
+                                    boost::bind(&client::handle_read, this, _1, _2));
 
-            boost::asio::async_write(socket_, boost::asio::buffer("2", 1), boost::bind(&client::handle_write, this, _1, _2));
+//            boost::asio::async_write(socket_, boost::asio::buffer("2", 1), boost::bind(&client::handle_write, this, _1, _2));
 
         }
         else
